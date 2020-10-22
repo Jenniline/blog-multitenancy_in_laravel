@@ -12,7 +12,7 @@
         </div>
 
         <div class="col-md-2">
-            <a href=" {{route('posts.create')}}" class="btn btn-primary btn-block btn-h1-spacing p-3"> Create New Post </a>
+            <a  href='tenants/create' class="btn btn-primary btn-block btn-h1-spacing p-3"> Create New Tenant </a>
         </div>
         <div class="col-md-12">
             <hr>
@@ -30,6 +30,13 @@
           </tr>
         </thead>
         <tbody>
+            @foreach ($tenants as $tenant)
+            <tr>
+              <th> {{$tenant->id}} </th>
+              <td> {{$tenant->name}} </td> 
+              <td> <a href="tenants/{{$tenant->id}}">  {{$tenant->url}}  </a>    </td>
+            </tr>
+            @endforeach
             
         </tbody>
       </table>

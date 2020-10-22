@@ -120,8 +120,8 @@
             @include('partials._footer') 
 
         </div>   
-        {{-- end of container --}}
-                {{-- must not be named content can be named anything you want e.g body --}}
+        {{-- end of container
+                must not be named content can be named anything you want e.g body --}}
 
         @include('partials._javascript')
 

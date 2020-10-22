@@ -4,10 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Tenant;
 use Illuminate\Http\Request;
-<<<<<<< Updated upstream
 use Illuminate\Support\Facades\DB;
-=======
->>>>>>> Stashed changes
+use Illuminate\Database\MySqlConnection;
 
 class TenantController extends Controller
 {
@@ -18,13 +16,9 @@ class TenantController extends Controller
      */
     public function index()
     {
-<<<<<<< Updated upstream
         //
         $tenants = Tenant::all();
-        return view('index',['tenants',$tenants]);
-=======
-
->>>>>>> Stashed changes
+        return view('tenants.index',['tenants'=> $tenants]);
     }
 
     /**
@@ -34,12 +28,10 @@ class TenantController extends Controller
      */
     public function create()
     {
-<<<<<<< Updated upstream
         //
-=======
-        //to show a form to create a new post  
-        return view('tenants.create');
->>>>>>> Stashed changes
+         //to show a form to create a new post  
+         return view('tenants.create');
+
     }
 
     /**
@@ -51,14 +43,13 @@ class TenantController extends Controller
     public function store(Request $request)
     {
         //
-<<<<<<< Updated upstream
         $tenant = new Tenant;
         $tenant->name = $request->name;
-        $tenant->url = $request->url;
+        $tenant->url = $request->url . ".blog";
         $tenant->save();
-        DB::raw('CREATE DATABASE blog_multitenancy');
-=======
->>>>>>> Stashed changes
+        $connection =  DB::connection('mysql');
+        $connection->select(DB::raw("CREATE DATABASE tenant_" . $request->url));        
+        return redirect('tenants');
     }
 
     /**
@@ -69,7 +60,8 @@ class TenantController extends Controller
      */
     public function show(Tenant $tenant)
     {
-        //
+        
+         return view('tenants.show',['tenant'=>$tenant]);
     }
 
     /**
