@@ -34,7 +34,10 @@
             <tr>
               <th> {{$tenant->id}} </th>
               <td> {{$tenant->name}} </td> 
-              <td> <a href="tenants/{{$tenant->id}}">  {{$tenant->url}}  </a>    </td>
+              <td> 
+                <a href="tenants/{{$tenant->id}}">  {{$tenant->url}}  </a>  <br>  
+                {{-- <a href="http://{{$tenant->url}}.mysite.tenants">  {{$tenant->url}}.mysite.tenants  </a>   --}}
+              </td>
             </tr>
             @endforeach
             

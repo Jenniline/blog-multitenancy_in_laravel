@@ -6,6 +6,9 @@ use App\Models\Tenant;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\MySqlConnection;
+use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Config;
+
 
 class TenantController extends Controller
 {
@@ -45,11 +48,22 @@ class TenantController extends Controller
         //
         $tenant = new Tenant;
         $tenant->name = $request->name;
-        $tenant->url = $request->url . ".blog";
+        $tenant->url = $request->url;
         $tenant->save();
-        $connection =  DB::connection('mysql');
-        $connection->select(DB::raw("CREATE DATABASE tenant_" . $request->url));        
-        return redirect('tenants');
+        $db_name =  "tenant_" . $request->url;
+        DB::statement("CREATE DATABASE ".$db_name.";");   
+
+        Config::set('database.connections.mysql_user', array(
+            'driver' => 'mysql',
+            'host' => env('DB_HOST', '127.0.0.1'),
+            'database' => $db_name,
+            'username' => env('DB_USERNAME', 'forge'),
+            'password' => env('DB_PASSWORD', ''),
+            ));                  
+
+        Artisan::call('migrate', array('--database'=>'mysql_user'));
+        Artisan::call('db:seed', array('--database'=>'mysql_user'));
+        return redirect('/tenants');
     }
 
     /**
@@ -60,8 +74,17 @@ class TenantController extends Controller
      */
     public function show(Tenant $tenant)
     {
-        
-         return view('tenants.show',['tenant'=>$tenant]);
+        Config::set('database.connections.mysql_user', array(
+            'driver' => 'mysql',
+            'host' => env('DB_HOST', '127.0.0.1'),
+            'database' => "tenant_".$tenant->url,
+            'username' => env('DB_USERNAME', 'forge'),
+            'password' => env('DB_PASSWORD', ''),
+            ));                  
+         $connection =  DB::connection('mysql_user');
+         $tenants = $connection->select(DB::raw("SELECT * FROM tenants"));
+        //  $tenants = Tenant::all();
+         return view('tenants.show',['tenants'=>$tenants,'tenant'=>$tenant]);
     }
 
     /**
