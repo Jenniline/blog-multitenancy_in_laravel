@@ -47,10 +47,11 @@ class TenantController extends Controller
     {
         //
         $tenant = new Tenant;
-        $tenant->name = $request->name;
-        $tenant->url = $request->url;
+        $tenant->site_name = $request->site_name;
+        $tenant->subdomain = $request->subdomain;
         $tenant->save();
-        $db_name =  "tenant_" . $request->url;
+
+        $db_name =  "tenant_" . $request->subdomain;
         DB::statement("CREATE DATABASE ".$db_name.";");   
 
         Config::set('database.connections.mysql_user', array(
@@ -77,7 +78,7 @@ class TenantController extends Controller
         Config::set('database.connections.mysql_user', array(
             'driver' => 'mysql',
             'host' => env('DB_HOST', '127.0.0.1'),
-            'database' => "tenant_".$tenant->url,
+            'database' => "tenant_".$tenant->subdomain,
             'username' => env('DB_USERNAME', 'forge'),
             'password' => env('DB_PASSWORD', ''),
             ));                  

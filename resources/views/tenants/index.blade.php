@@ -1,6 +1,6 @@
 @extends('main') 
 
-@section('title', '| All Posts')
+@section('title', '| All Tenants')
     
 {{-- @endsection --}}
 
@@ -8,7 +8,7 @@
 
     <div class="row mt-5">
         <div class="col-md-10">
-          <h1>  All Posts </h1>  
+          <h1>  All Digital Renter Tenants </h1>  
         </div>
 
         <div class="col-md-2">
@@ -24,8 +24,8 @@
         <thead class="thead-dark">
           <tr>
                     <th scope="col">id</th>
-                    <th>name</th>
-                    <th>url</th>
+                    <th>site name</th>
+                    <th>subdomain</th>
 
           </tr>
         </thead>
@@ -33,9 +33,9 @@
             @foreach ($tenants as $tenant)
             <tr>
               <th> {{$tenant->id}} </th>
-              <td> {{$tenant->name}} </td> 
+              <td> {{$tenant->site_name}} </td> 
               <td> 
-                <a href="tenants/{{$tenant->id}}">  {{$tenant->url}}  </a>  <br>  
+                <a href="tenants/{{$tenant->id}}">  {{$tenant->site_name}}/digitalrenter.com  </a>  <br>  
                 {{-- <a href="http://{{$tenant->url}}.mysite.tenants">  {{$tenant->url}}.mysite.tenants  </a>   --}}
               </td>
             </tr>

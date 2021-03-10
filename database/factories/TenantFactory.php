@@ -8,7 +8,7 @@ use Faker\Generator as Faker;
 $factory->define(Tenant::class, function (Faker $faker) {
     return [
         //
-        'name' => $faker->name,
-        'url' => $faker->url
+        'site_name' => $faker->site_name,
+        'subdomain' => $faker->subdomain,
     ];
 });

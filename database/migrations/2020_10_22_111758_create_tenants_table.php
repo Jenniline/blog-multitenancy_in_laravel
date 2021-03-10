@@ -15,8 +15,10 @@ class CreateTenantsTable extends Migration
     {
         Schema::create('tenants', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('name');
-            $table->string('url');
+            // $table->string('name');
+            $table->string('site_name');
+            $table->string('subdomain');
+            // $table->string('url');
             $table->timestamps();
         });
     }
